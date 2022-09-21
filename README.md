@@ -19,6 +19,9 @@
 ## How apply solution
 
 TODO...
+ - describe how apply on `java` projects
+ - describe how apply on `python` projects
+ - describe how prepare environment for storing traces 
 
 ## Service list
 
