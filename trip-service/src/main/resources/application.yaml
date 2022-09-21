@@ -1,0 +1,45 @@
+server:
+  port: 8086
+spring:
+  application:
+    name: nology
+  zipkin:
+    sender:
+      type: WEB
+  sleuth:
+    baggage:
+      local-fields:
+        - trip-id
+      remote-fields:
+        - trip-id
+      tag-fields:
+        - trip-id
+      correlation-fields:
+        - trip-id
+logging:
+  level:
+    com:
+      unikoom:
+        tracingdemo: DEBUG
+    org:
+      apache:
+        coyote:
+          http11:
+            Http11InputBuffer: DEBUG
+    reactor:
+      netty:
+        http:
+          client: DEBUG
+
+cloud:
+  aws:
+    stack:
+      auto: false
+    credentials:
+      access-key: AKIAU2QQQNBEVX6NEUTJ
+      secret-key: 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
+      instance-profile: false
+    region:
+      static: us-east-1
+    s3:
+      region: us-west-1

@@ -1,0 +1,23 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: cities
+  zipkin:
+    sender:
+      type: WEB
+  sleuth:
+    baggage:
+      local-fields:
+        - trip-id
+      remote-fields:
+        - trip-id
+      tag-fields:
+        - trip-id
+      correlation-fields:
+        - trip-id
+logging:
+  level:
+    com:
+      unikoom:
+        tracingdemo: DEBUG

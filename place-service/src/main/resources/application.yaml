@@ -1,0 +1,13 @@
+server:
+  port: 8083
+spring:
+  application:
+    name: places
+  zipkin:
+    sender:
+      type: WEB
+logging:
+  level:
+    com:
+      unikoom:
+        tracingdemo: DEBUG

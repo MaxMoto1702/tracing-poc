@@ -1,0 +1,13 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: analytics
+  zipkin:
+    sender:
+      type: WEB
+logging:
+  level:
+    com:
+      unikoom:
+        tracingdemo: DEBUG

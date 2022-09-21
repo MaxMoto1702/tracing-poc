@@ -1,0 +1,10 @@
+.idea
+*.iml
+_work
+*.bak
+*.bak.*
+.env
+
+app_version.json
+__pycache__
+logic/env_vars.py

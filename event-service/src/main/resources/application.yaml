@@ -1,0 +1,13 @@
+server:
+  port: 8082
+spring:
+  application:
+    name: events
+  zipkin:
+    sender:
+      type: WEB
+logging:
+  level:
+    com:
+      unikoom:
+        tracingdemo: DEBUG
