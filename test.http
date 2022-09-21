@@ -1,0 +1,260 @@
+### Get trip
+
+GET localhost:8086/trips/1
+
+### Generate trip
+
+POST localhost:8086/trips/generate
+Content-Type: application/json
+
+{}
+
+### Generate trip (async)
+
+POST localhost:8086/trips/generate?isAsync=true
+Content-Type: application/json
+
+{}
+
+### Get places
+
+GET localhost:8083/places
+
+### Build trip on trip-builder
+
+POST http://localhost:8085/build-trip
+Content-Type: application/json
+
+{}
+
+###
+
+POST http://localhost:9411/api/v2/spans
+Content-Type: application/json
+
+[
+  {
+    "traceId": "1702009",
+    "id": "1702009",
+    "name": "build-trip",
+    "parentId": "1702001",
+    "timestamp": 1662628629167935,
+    "duration": 30579068,
+    "shared": true,
+    "kind": "SERVER",
+    "localEndpoint": {
+      "serviceName": "builder",
+      "port": 8085,
+      "ipv4": "127.0.0.1"
+    }
+  }
+]
+
+###
+
+POST http://localhost:9411/api/v2/spans
+Content-Type: application/json
+
+[
+  {
+    "traceId": "17102003",
+    "parentId": "ed1809f68f13c5d6",
+    "id": "630b3ae7d2d994a1",
+    "kind": "CLIENT",
+    "name": "get /cities",
+    "timestamp": 1662627579414558,
+    "duration": 48903,
+    "localEndpoint": {
+      "serviceName": "places",
+      "ipv4": "192.168.2.129"
+    },
+    "tags": {
+      "http.method": "GET",
+      "http.path": "/cities"
+    }
+  },
+  {
+    "traceId": "17102003",
+    "id": "ed1809f68f13c5d6",
+    "kind": "SERVER",
+    "name": "get /places",
+    "timestamp": 1662627579396586,
+    "duration": 70811,
+    "localEndpoint": {
+      "serviceName": "places",
+      "ipv4": "192.168.2.129"
+    },
+    "remoteEndpoint": {
+      "ipv4": "127.0.0.1",
+      "port": 50403
+    },
+    "tags": {
+      "http.method": "GET",
+      "http.path": "/places",
+      "mvc.controller.class": "PlaceController",
+      "mvc.controller.method": "list"
+    }
+  }
+]
+
+###
+
+POST http://localhost:9411/api/v2/spans
+Content-Type: application/json
+
+[
+  {
+    "traceId": "1702000000000021",
+    "id": "1702000000000021",
+    "kind": "SERVER",
+    "name": "post /trips/generate",
+    "timestamp": 1662709294621991,
+    "duration": 1381814,
+    "localEndpoint": {
+      "serviceName": "nology",
+      "ipv4": "192.168.2.129"
+    },
+    "remoteEndpoint": {
+      "ipv4": "127.0.0.1",
+      "port": 61857
+    },
+    "tags": {
+      "http.method": "POST",
+      "http.path": "/trips/generate",
+      "mvc.controller.class": "TripController",
+      "mvc.controller.method": "generate",
+      "tripId": "A000000002"
+    }
+  },
+  {
+    "traceId": "1702000000000022",
+    "id": "1702000000000022",
+    "kind": "PRODUCER",
+    "name": "send",
+    "timestamp": 1662709296960434,
+    "duration": 6469,
+    "localEndpoint": {
+      "serviceName": "nology",
+      "ipv4": "192.168.2.129"
+    },
+    "remoteEndpoint": {
+      "serviceName": "jms"
+    },
+    "tags": {
+      "jms.queue": "local-max-demo-rq"
+    }
+  },
+  {
+    "traceId": "1702000000000022",
+    "parentId": "1702000000000022",
+    "id": "1702000000000023",
+    "kind": "CONSUMER",
+    "name": "receive",
+    "timestamp": 1662709296972440,
+    "duration": 1,
+    "localEndpoint": {
+      "serviceName": "nology",
+      "ipv4": "192.168.2.129"
+    },
+    "remoteEndpoint": {
+      "serviceName": "jms"
+    },
+    "tags": {
+      "jms.queue": "local-max-demo-rq"
+    }
+  },
+  {
+    "traceId": "1702000000000022",
+    "parentId": "1702000000000023",
+    "id": "1702000000000024",
+    "name": "on-message",
+    "timestamp": 1662709296979710,
+    "duration": 6418,
+    "localEndpoint": {
+      "serviceName": "nology",
+      "ipv4": "192.168.2.129"
+    },
+    "tags": {
+      "tripId": "A000000002"
+    }
+  }
+]
+
+### PRODUCER
+
+POST http://localhost:9411/api/v2/spans
+Content-Type: application/json
+
+[
+  {
+    "traceId": "50dc4087dd29fa20",
+    "id": "50dc4087dd29fa20",
+    "kind": "PRODUCER",
+    "name": "send",
+    "timestamp": 1663678583221908,
+    "duration": 2257389,
+    "localEndpoint": {
+      "serviceName": "nology",
+      "ipv4": "192.168.2.129"
+    },
+    "remoteEndpoint": {
+      "serviceName": "aws"
+    },
+    "tags": {
+      "jms.queue": "local-max-demo-rq"
+    }
+  }
+]
+
+### CONSUMER
+
+POST http://localhost:9411/api/v2/spans
+Content-Type: application/json
+
+[
+  {
+    "traceId": "50dc4087dd29fa19",
+    "parentId": "50dc4087dd29fa19",
+    "id": "10297986a66cac7c",
+    "kind": "CONSUMER",
+    "name": "receive",
+    "timestamp": 1663678583221908,
+    "duration": 5862950,
+    "localEndpoint": {
+      "serviceName": "trip-builder",
+      "ipv4": "192.168.2.129"
+    },
+    "remoteEndpoint": {
+      "serviceName": "aws"
+    },
+    "tags": {
+      "jms.queue": "local-max-demo-rq"
+    }
+  },
+  {
+    "traceId": "50dc4087dd29fa19",
+    "parentId": "10297986a66cac7c",
+    "id": "334bd90d8ec2b8df",
+    "name": "on-message",
+    "timestamp": 1663598594846708,
+    "duration": 7084,
+    "localEndpoint": {
+      "serviceName": "trip-builder",
+      "ipv4": "192.168.2.129"
+    }
+  }
+]
+
+
+### Elasticsearch
+
+GET localhost:9200
+
+### Find in zipkin
+
+GET http://localhost:9411/zipkin/api/v2/traces?mvc.controller.class=TripController&endTs=1663678619148&lookback=900000&limit=10
+
+
+### Find in zipkin (annotationQuery)
+
+GET http://localhost:9411/zipkin/api/v2/traces?annotationQuery=mvc.controller.class%3DTripController&endTs=1663678619148&lookback=900000&limit=10
